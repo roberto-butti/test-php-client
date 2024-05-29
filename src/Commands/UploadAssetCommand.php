@@ -13,7 +13,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use function Laravel\Prompts\search;
-use function Termwind\ask;
 
 class UploadAssetCommand extends Command
 {
@@ -81,13 +80,22 @@ class UploadAssetCommand extends Command
             count($files),
             $spaceId,
         );
+
+
         foreach ($files as $filename) {
-            $url = $assets->upload($filename, $spaceId);
-            Term::labelValue($url, "[OK]");
+            $result = $assets->upload(
+                $filename,
+                $spaceId,
+                imageToText: true,
+            );
+            Term::sectionTitle(" ** Image (%d)** ", $result["id"]);
+            Term::labelValue("Image Identifier", $result["id"]);
+            Term::labelValue("Space Identifier", $result["spaceid"]);
+            Term::labelValue("URL", $result["url"]);
+            Term::labelValue("Alt Text", $result["text"]);
+
         }
-        ask(
-            "press key",
-        );
+
 
 
         return Command::SUCCESS;
