@@ -30,8 +30,9 @@ class HelloWorldCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // 10 using the Output for writing something
-        $output->writeln("Hello, " . get_current_user() . "!");
-        $output->writeln("It's " . date("l"));
+        $output->writeln('Hello, ' . get_current_user() . '!');
+        $output->writeln("It's " . date('l'));
+
         // 11 returning the success status
         return Command::SUCCESS;
     }
