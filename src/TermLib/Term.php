@@ -6,7 +6,7 @@ use function Termwind\render;
 
 class Term
 {
-    public static function title(...$args)
+    public static function title(...$args): void
     {
         if (count($args) < 1) {
             $format = "";
@@ -21,7 +21,7 @@ class Term
             </div>
         HTML);
     }
-    public static function sectionTitle(...$args)
+    public static function sectionTitle(...$args): void
     {
         if (count($args) < 1) {
             $format = "";
@@ -47,7 +47,7 @@ class Term
         return sprintf($format, ...$args);
     }
 
-    public static function warning(...$args)
+    public static function warning(...$args): void
     {
         $formattedString = self::formattedString(...$args);
 
@@ -58,7 +58,7 @@ class Term
         HTML);
     }
 
-    public static function labelValue($label, $value, $colorValue = 'green')
+    public static function labelValue($label, $value, $colorValue = 'green'): void
     {
         render(<<<HTML
         <div class="flex space-x-1">
@@ -69,7 +69,7 @@ class Term
         HTML);
     }
 
-    public static function table()
+    public static function table(): void
     {
         render(<<<HTML
     <table>

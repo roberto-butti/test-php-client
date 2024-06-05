@@ -20,12 +20,15 @@
     }
   },
   "require-dev": {
-    "laravel/pint": "^1.16"
+    "laravel/pint": "^1.16",
+    "rector/rector": "^1.1"
   },
   "scripts": {
     "all": [
-      "@format"
+      "@format",
+      "@rectorphp"
     ],
-    "format": "vendor/bin/pint src"
+    "format": "vendor/bin/pint src",
+    "rectorphp": "vendor/bin/rector"
   }
 }
