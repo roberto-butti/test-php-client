@@ -10,4 +10,10 @@ class Spaces extends MapiBase
     {
         return Arr::make($this->client->get('/v1/spaces')->getBody())->getArr('spaces');
     }
+
+    public function get($spaceId)
+    {
+        return Arr::make($this->client->get('/v1/spaces/' . $spaceId)->getBody())->getArr('space');
+    }
+
 }

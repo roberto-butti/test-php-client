@@ -1,6 +1,9 @@
 <?php
 
 use MyExample\Commands\HelloWorldCommand;
+use MyExample\Commands\LanguagesCommand;
+use MyExample\Commands\SpacesCommand;
+use MyExample\Commands\StoriesCommand;
 use MyExample\Commands\UploadAssetCommand;
 use MyExample\Commands\WhoAmICommand;
 use Symfony\Component\Console\Application;
@@ -20,6 +23,9 @@ $app = new Application('Hello World', '1.0.0');
 $app->add(new HelloWorldCommand());
 $app->add(new WhoAmICommand());
 $app->add(new UploadAssetCommand());
+$app->add(new StoriesCommand());
+$app->add(new SpacesCommand());
+$app->add(new LanguagesCommand());
 
 // $app->add(new AnotherCommand());
 

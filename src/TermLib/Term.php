@@ -37,6 +37,27 @@ class Term
         HTML);
     }
 
+    public static function formattedString(...$args): string
+    {
+        if (count($args) < 1) {
+            $format = "";
+        } else {
+            $format = array_shift($args);
+        }
+        return sprintf($format, ...$args);
+    }
+
+    public static function warning(...$args)
+    {
+        $formattedString = self::formattedString(...$args);
+
+        render(<<<HTML
+            <div class="space-x-1 py-1">
+                <span class="px-1 py-0  bg-yellow-500 text-gray-900">{$formattedString}</span>
+            </div>
+        HTML);
+    }
+
     public static function labelValue($label, $value, $colorValue = 'green')
     {
         render(<<<HTML
@@ -46,5 +67,23 @@ class Term
             <span class="font-bold text-{$colorValue}">{$value}</span>
         </div>
         HTML);
+    }
+
+    public static function table()
+    {
+        render(<<<HTML
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tr>
+            <th>Termwind</th>
+            <td>✓ Done</td>
+        </tr>
+    </table>
+HTML);
     }
 }

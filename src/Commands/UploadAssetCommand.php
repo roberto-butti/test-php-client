@@ -43,7 +43,6 @@ class UploadAssetCommand extends Command
         $dotenv->load();
         $client = new \Storyblok\ManagementClient(
             apiKey: $_ENV['STORYBLOK_OAUTH_TOKEN'],
-            //apiEndpoint: 'api.storyblok.com',
         );
         $assets = new Assets($client);
         $spacesApi = new Spaces($client);
@@ -91,6 +90,7 @@ class UploadAssetCommand extends Command
             Term::sectionTitle(" ** Image (%d)** ", $result["id"]);
             Term::labelValue("Image Identifier", $result["id"]);
             Term::labelValue("Space Identifier", $result["spaceid"]);
+            Term::labelValue("Space URL", "https://app.storyblok.com/#/me/spaces/{$result['spaceid']}/assets/0");
             Term::labelValue("URL", $result["url"]);
             Term::labelValue("Alt Text", $result["text"]);
 
