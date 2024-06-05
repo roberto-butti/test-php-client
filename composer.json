@@ -18,5 +18,14 @@
     "allow-plugins": {
       "codewithkyrian/transformers-libsloader": true
     }
+  },
+  "require-dev": {
+    "laravel/pint": "^1.16"
+  },
+  "scripts": {
+    "all": [
+      "@format"
+    ],
+    "format": "vendor/bin/pint src"
   }
 }
