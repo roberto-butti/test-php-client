@@ -2,3 +2,4 @@
 /.env
 /.transformers-cache
 /photo*.jpeg
+/test*.jpg

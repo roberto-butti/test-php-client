@@ -6,7 +6,7 @@ use HiFolks\DataType\Arr;
 
 class User extends MapiBase
 {
-    public function me()
+    public function me(): \HiFolks\DataType\Arr
     {
         return Arr::make($this->client->get('/v1/users/me')->getBody())->getArr('user');
     }

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class LanguagesCommand extends Command
 {
+    #[\Override]
     protected function configure()
     {
         $this
@@ -25,11 +26,13 @@ class LanguagesCommand extends Command
             );
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
+
         $client = new \Storyblok\ManagementClient(
             apiKey: $_ENV['STORYBLOK_OAUTH_TOKEN'],
         );

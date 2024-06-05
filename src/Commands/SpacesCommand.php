@@ -14,6 +14,7 @@ use function Laravel\Prompts\table as promptsTable;
 
 class SpacesCommand extends Command
 {
+    #[\Override]
     protected function configure()
     {
         $this
@@ -28,11 +29,13 @@ class SpacesCommand extends Command
             );
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
+
         $client = new \Storyblok\ManagementClient(
             apiKey: $_ENV['STORYBLOK_OAUTH_TOKEN'],
         );
@@ -42,7 +45,7 @@ class SpacesCommand extends Command
         );
 
 
-        $spaceId = $input->getOption('spaceid');
+        $input->getOption('spaceid');
 
         $spaces = (new Spaces($client))->all();
         $me = (new User($clientApi))->me();
@@ -51,7 +54,7 @@ class SpacesCommand extends Command
 
         Term::title('Spaces for %s', $me->get("id"));
         $tableRows = [];
-        foreach ($spaces as $key => $element) {
+        foreach ($spaces as $element) {
             $isMe = ($me->get("id") == $element["owner_id"]) ? "v" : "";
             $tableRows[] = [
                 $element["id"],
@@ -61,6 +64,7 @@ class SpacesCommand extends Command
 
             ];
         }
+
         //var_dump($tableRows);
         promptsTable(
             ['ID', 'Space',  "Is me?"],

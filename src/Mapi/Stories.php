@@ -6,7 +6,7 @@ use HiFolks\DataType\Arr;
 
 class Stories extends MapiBase
 {
-    public function list($spaceId): Arr
+    public function list(string $spaceId): Arr
     {
 
         $response = $this->client->get(
@@ -22,7 +22,8 @@ class Stories extends MapiBase
         )->getBody();
         return Arr::make($response["stories"]);
     }
-    public function applyWorkflow($spaceId, $storyId, $workflowId)
+
+    public function applyWorkflow(string $spaceId, $storyId, $workflowId): bool
     {
         $payload = [
             "workflow_stage_change" =>

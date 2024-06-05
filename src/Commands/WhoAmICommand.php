@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WhoAmICommand extends Command
 {
+    #[\Override]
     protected function configure()
     {
         $this
@@ -18,11 +19,13 @@ class WhoAmICommand extends Command
             ->setHelp('This command prints info about the current user in Storyblok.');
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
+
         $client = new \Storyblok\ManagementClient(
             apiKey: $_ENV['STORYBLOK_OAUTH_TOKEN'],
             apiEndpoint: 'api.storyblok.com',
@@ -34,16 +37,14 @@ class WhoAmICommand extends Command
         $output->writeln('Hello, ' . $me->get('friendly_name') . '!');
 
         $me->forEach(
-            function ($element, $key) {
+            static function ($element, $key): void {
                 if (is_scalar($element)) {
                     Term::labelValue($key, $element);
-                } else {
+                } elseif (gettype($element) === 'array') {
                     //var_dump($element);
-                    if (gettype($element) == 'array') {
-                        Term::labelValue($key, '# ' . count($element) . ' items', 'blue');
-                    } else {
-                        Term::labelValue($key, gettype($element), 'blue');
-                    }
+                    Term::labelValue($key, '# ' . count($element) . ' items', 'blue');
+                } else {
+                    Term::labelValue($key, gettype($element), 'blue');
                 }
             },
         );

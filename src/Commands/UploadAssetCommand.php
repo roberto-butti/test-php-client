@@ -16,6 +16,7 @@ use function Laravel\Prompts\search;
 
 class UploadAssetCommand extends Command
 {
+    #[\Override]
     protected function configure()
     {
         $this
@@ -36,11 +37,13 @@ class UploadAssetCommand extends Command
             );
     }
 
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
+
         $client = new \Storyblok\ManagementClient(
             apiKey: $_ENV['STORYBLOK_OAUTH_TOKEN'],
         );
@@ -62,14 +65,15 @@ class UploadAssetCommand extends Command
             $spaceId = search(
                 label: 'Search for the space id for uploading the assets',
                 placeholder: 'The space identifier (a number)',
-                options: fn($value) => strlen($value) > 0
-                ? array_filter($ids, fn($e) => str_contains($e, $value))
+                options: static fn($value): array => strlen($value) > 0
+                ? array_filter($ids, static fn($e): bool => str_contains($e, $value))
                 : [],
                 hint: 'Insert the space id.',
             );
 
 
         }
+
         //var_dump($files);
         //var_dump($spaceId);
 
@@ -90,7 +94,7 @@ class UploadAssetCommand extends Command
             Term::sectionTitle(" ** Image (%d)** ", $result["id"]);
             Term::labelValue("Image Identifier", $result["id"]);
             Term::labelValue("Space Identifier", $result["spaceid"]);
-            Term::labelValue("Space URL", "https://app.storyblok.com/#/me/spaces/{$result['spaceid']}/assets/0");
+            Term::labelValue("Space URL", sprintf('https://app.storyblok.com/#/me/spaces/%s/assets/0', $result['spaceid']));
             Term::labelValue("URL", $result["url"]);
             Term::labelValue("Alt Text", $result["text"]);
 

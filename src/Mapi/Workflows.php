@@ -6,7 +6,7 @@ use HiFolks\DataType\Arr;
 
 class Workflows extends MapiBase
 {
-    public function list($spaceId): Arr
+    public function list(string $spaceId): Arr
     {
 
         $response = $this->client->get(
@@ -15,7 +15,7 @@ class Workflows extends MapiBase
         return Arr::make($response["workflows"]);
     }
 
-    public function listStages($spaceId, $workflowId): Arr
+    public function listStages(string $spaceId, $workflowId): Arr
     {
 
         $response = $this->client->get(

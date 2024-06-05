@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class HelloWorldCommand extends Command
 {
     // 05 Implementing the configure method
+    #[\Override]
     protected function configure()
     {
         $this
@@ -27,6 +28,7 @@ class HelloWorldCommand extends Command
     }
 
     // 09 implementing the execute method
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // 10 using the Output for writing something

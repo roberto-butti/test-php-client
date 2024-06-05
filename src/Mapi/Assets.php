@@ -13,7 +13,7 @@ class Assets extends MapiBase
         string $filename,
         string $spaceId,
         bool $imageToText = false,
-    ) {
+    ): array {
         $size = getimagesize($filename);
         //print_r($size);
         $width = $size[0];
@@ -32,14 +32,15 @@ class Assets extends MapiBase
                 'contents' => $contents,
             ];
         }
+
         $client = new Client();
 
-        $responseSigned = $client->request('POST', $response['post_url'], [
+        $client->request('POST', $response['post_url'], [
             'multipart' => $multipart,
         ]);
 
 
-        $responseFinish = $this->client->get('/v1/spaces/' . $spaceId . '/assets/' . $response["id"] . '/finish_upload')->getBody();
+        $this->client->get('/v1/spaces/' . $spaceId . '/assets/' . $response["id"] . '/finish_upload')->getBody();
 
         if ($imageToText) {
             error_reporting(0);
@@ -60,19 +61,19 @@ class Assets extends MapiBase
             );
 
         }
-        $result = [
+
+        return [
             "spaceid" => $spaceId,
             "id" => $response["id"],
             "text" => $result[0]['generated_text'],
             "url" => 'https://a.storyblok.com/' . $response['fields']['key'],
         ];
-        return $result;
 
     }
 
-    public function update($spaceId, $imageId, $payload)
+    public function update(string $spaceId, string $imageId, $payload): bool
     {
-        $response = $this->client->put('/v1/spaces/' . $spaceId . '/assets/' . $imageId, $payload)->getBody();
+        $this->client->put('/v1/spaces/' . $spaceId . '/assets/' . $imageId, $payload)->getBody();
 
         return true;
 

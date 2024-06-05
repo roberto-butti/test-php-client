@@ -8,11 +8,8 @@ class Term
 {
     public static function title(...$args): void
     {
-        if (count($args) < 1) {
-            $format = "";
-        } else {
-            $format = array_shift($args);
-        }
+        $format = count($args) < 1 ? "" : array_shift($args);
+
         $formattedString = sprintf($format, ...$args);
 
         render(<<<HTML
@@ -21,13 +18,11 @@ class Term
             </div>
         HTML);
     }
+
     public static function sectionTitle(...$args): void
     {
-        if (count($args) < 1) {
-            $format = "";
-        } else {
-            $format = array_shift($args);
-        }
+        $format = count($args) < 1 ? "" : array_shift($args);
+
         $formattedString = sprintf($format, ...$args);
 
         render(<<<HTML
@@ -39,11 +34,8 @@ class Term
 
     public static function formattedString(...$args): string
     {
-        if (count($args) < 1) {
-            $format = "";
-        } else {
-            $format = array_shift($args);
-        }
+        $format = count($args) < 1 ? "" : array_shift($args);
+
         return sprintf($format, ...$args);
     }
 
